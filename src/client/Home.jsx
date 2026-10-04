@@ -4,7 +4,7 @@ import { Trophy, Users, Activity, Flame, Skull } from 'lucide-react';
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer } from 'recharts';
 
 // Replace this with your actual Google Sheets -> Publish to Web CSV URL (Game_Calc tab)
-const GOOGLE_SHEET_CSV_URL = 'YOUR_PUBLISHED_CSV_URL';
+const GOOGLE_SHEET_CSV_URL = 'https://docs.google.com/spreadsheets/d/e/2PACX-1vTjcgsVSpaLpGRAnfCOJ2mvHLIYSGljbr9s0PLneW7I5RB6BLJJ7p5bYzmX30h0uxRN2BpyzLrhhOay/pub?gid=1177439262&single=true&output=csv';
 
 export default function Home() {
   const [draftSetup, setDraftSetup] = useState(null);
