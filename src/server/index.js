@@ -1,27 +1,32 @@
-require('dotenv').config({ path: './w3s-dynamic-storage/.env' })
-const path = require('path');
-const express = require('express');
+import express from 'express';
+import cors from 'cors';
 
 const app = express();
+const port = process.env.PORT || 3000;
 
-app.use(express.static('dist'));
-app.use(express.json());
+app.use(cors());
 
-app.get('/api/hello', async (req, res) => {
-  res.send('Hello world');
+// Hardcoded JSON representing persisted database data
+const DRAFT_DB = {
+  gameId: "ss51_alpha",
+  captains: [
+    { id: "5", name: "Colton", email: "colton@example.com", color: "#0094c6" },
+    { id: "1", name: "Sebastian", email: "sebastian@example.com", color: "#ff9f1c" },
+    { id: "2", name: "Charlotte", email: "charlotte@example.com", color: "#e71d36" }
+  ],
+  // Mapping contestant_ids to captain names
+  rosters: {
+    "Colton": ["ss51_01", "ss51_02", "ss51_07"],
+    "Sebastian": ["ss51_03", "ss51_06", "ss51_19"],
+    "Charlotte": ["ss51_04", "ss51_05", "ss51_08"]
+  }
+};
+
+// API Endpoint to fetch initial setup data
+app.get('/api/draft-setup', (req, res) => {
+  res.json(DRAFT_DB);
 });
 
-const clientApp = express();
-clientApp.use(express.static('dist'));
-clientApp.use(express.json());
-
-clientApp.get('*', (req, res) => {
-  res.sendFile(path.resolve(__dirname, '../../dist', 'index.html'));
+app.listen(port, () => {
+  console.log(`Server listening on port ${port}`);
 });
-
-
-app.listen(process.env.PORT || 3000, () => console.log(`Listening on port ${process.env.PORT || 3000}!`));
-
-if (process.env.NODE_ENV !== 'development') {
-  clientApp.listen(8000, () => console.log('client listening on port 8000'));
-}
